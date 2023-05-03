@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cl7ylxew07csb"]
+[gd_scene load_steps=13 format=3 uid="uid://cl7ylxew07csb"]
 
 [ext_resource type="Texture2D" uid="uid://cavphlkmbl11c" path="res://Player2.png" id="1_8xay6"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_uww6a"]
@@ -84,6 +84,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [1]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_0006c"]
 resource_name = "Sword"
@@ -99,6 +111,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [14, 15, 16, 17]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
 }
 
 [sub_resource type="Animation" id="Animation_1n2hf"]
@@ -129,6 +153,9 @@ _data = {
 "Walk": SubResource("Animation_1n2hf")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g1mcn"]
+size = Vector2(19, 38)
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_uww6a")
 
@@ -146,3 +173,10 @@ shape = SubResource("RectangleShape2D_pd50c")
 libraries = {
 "": SubResource("AnimationLibrary_vvkgy")
 }
+
+[node name="Sword" type="Area2D" parent="."]
+position = Vector2(25, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
+shape = SubResource("RectangleShape2D_g1mcn")
+debug_color = Color(1, 0, 0, 0.419608)
