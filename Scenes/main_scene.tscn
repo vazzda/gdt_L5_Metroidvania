@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8phguf0p15ks"]
+
+[ext_resource type="PackedScene" uid="uid://cl7ylxew07csb" path="res://Scenes/Player/player.tscn" id="1_hnjsj"]
+
+[node name="MainScene" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Player" parent="." instance=ExtResource("1_hnjsj")]
