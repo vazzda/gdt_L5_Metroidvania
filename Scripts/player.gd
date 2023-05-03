@@ -19,7 +19,13 @@ func _ready():
 func _physics_process(delta):
 	_handleInputs(delta)
 	_handleGravity()
-	_updateAnims()
+
+	match CurrentState:
+		PlayerStates.MOVE:
+			_updateBasicAnims()
+		PlayerStates.SWORD:
+			_updateAttackAnims()
+	
 	move_and_slide()
 
 
@@ -80,17 +86,9 @@ func _handleGravity():
 	velocity.y += GRAVITY
 
 
-func _updateAnims():
+func _updateBasicAnims():
 	var movement = Input.get_action_strength("ui_move_right") - \
 		Input.get_action_strength("ui_move_left")
-	var currentAnim = $anim.get_current_animation()
-	
-	if CurrentState == PlayerStates.SWORD:
-		if currentAnim == "Sword":
-			return
-		else:
-			$anim.play("Sword")
-			return
 
 	if !is_on_floor() && velocity.y > 10:
 		$anim.play("Fall")
@@ -105,9 +103,17 @@ func _updateAnims():
 		$anim.play("Idle")
 
 
+func _updateAttackAnims():
+	if CurrentState == PlayerStates.SWORD && !swordAnimInProgress:
+		$anim.play("Sword")
+		swordAnimInProgress = true
+
+
+
 func _onAnimationFinised(name: String):
 	if name == "Sword":
 		_resetPlayerState()
+	swordAnimInProgress = false
 
 
 func _resetPlayerState():
