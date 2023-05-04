@@ -6,19 +6,25 @@ var VELOCITY_CLAMNP = 100.0
 var GRAVITY = 20
 var JUMP = 400
 var JUMP_IN_AIR_LIMIT = 2
+var KICK_FREEZE = 0.5
+var KICK_FORCE = Vector2(200,-200)
 
 var health = Globals.playerLives
 
-enum PlayerStates {MOVE, SWORD, DEATH}
+enum PlayerStates {MOVE, SWORD, KICKED, DEATH}
 var CurrentState = PlayerStates.MOVE
 var jump_in_air_counter = 0
 var swordAnimInProgress = false
 var deathAnimInProgress = false
+var freezeTimer = Timer.new()
 
 func _ready():
 	$Sword/CollisionShape2D.disabled = true
 	$anim.connect("animation_finished", _onAnimationFinised)
 	$hitbox.connect("area_entered", _onHitboxAreaEntred)
+	add_child(freezeTimer)
+	freezeTimer.connect("timeout", _onFreezeTimeOut)
+
 
 func _physics_process(delta):
 	match CurrentState:
@@ -32,7 +38,8 @@ func _physics_process(delta):
 			_updateAttackAnims()
 		PlayerStates.DEATH:
 			_handleGravity()
-			_updateAttackAnims()
+		PlayerStates.KICKED:
+			_handleGravity()
 	
 	move_and_slide()
 
@@ -79,6 +86,34 @@ func _moveIdle():
 func _jump():
 	velocity.y = -JUMP
 	
+func _kick(direction):
+	velocity.y = KICK_FORCE.y
+	velocity.x = KICK_FORCE.x * direction
+
+
+func _getKick(area):
+	if CurrentState != PlayerStates.DEATH:
+		CurrentState = PlayerStates.KICKED
+		if !freezeTimer.is_stopped():
+			freezeTimer.stop()
+		freezeTimer.start(KICK_FREEZE)
+		
+	var direction
+	var areaX = area.global_position.x
+	var playerX = global_position.x
+	if areaX <= playerX:
+		direction = 1
+	else:
+		direction = -1
+	
+	_kick(direction)
+	
+
+func _onFreezeTimeOut():
+	if CurrentState == PlayerStates.KICKED:
+		CurrentState = PlayerStates.MOVE
+	
+	
 func _jumpInAir():
 	if jump_in_air_counter < JUMP_IN_AIR_LIMIT:
 		jump_in_air_counter += 1
@@ -93,6 +128,8 @@ func _sword(movement):
 
 func _handleGravity():
 	velocity.y += GRAVITY
+	if CurrentState == PlayerStates.KICKED && is_on_floor():
+		CurrentState = PlayerStates.MOVE
 
 
 func _updateBasicAnims():
@@ -130,15 +167,17 @@ func _resetPlayerState():
 
 func _onHitboxAreaEntred(area):
 	var isEnemy = area.is_in_group("ENEMY")
-	if isEnemy:
-		_takeDamage()
 
-func _takeDamage():
+	
+	if isEnemy:
+		_takeDamage(area)
+
+func _takeDamage(area):
+	_getKick(area)
 	health -= 1
 	Globals.playerLives = health
 	if health <= 0:
 		_death()
-	print(Globals.playerLives)
 
 func _death():
 	if deathAnimInProgress: return
