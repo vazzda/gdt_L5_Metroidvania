@@ -176,7 +176,7 @@ libraries = {
 
 [node name="Sword" type="Area2D" parent="."]
 light_mask = 8
-visibility_layer = 17
+visibility_layer = 49
 position = Vector2(25, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
