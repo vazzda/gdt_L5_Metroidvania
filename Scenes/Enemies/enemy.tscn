@@ -145,13 +145,15 @@ _data = {
 "RESET": SubResource("Animation_pchpo")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_2basq"]
-radius = 9.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u627e"]
+size = Vector2(15, 9)
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D" groups=["ENEMY"]]
+collision_layer = 8
+collision_mask = 3
 script = ExtResource("1_2qran")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["ENEMY"]]
 position = Vector2(-0.5, 13.5)
 shape = SubResource("RectangleShape2D_o2uoe")
 
@@ -174,12 +176,21 @@ target_position = Vector2(0, 10)
 position = Vector2(7, 12)
 target_position = Vector2(3, 0)
 
-[node name="hitbox" type="Area2D" parent="."]
+[node name="hitbox_enemy" type="Area2D" parent="." groups=["ENEMY"]]
 visibility_layer = 33
-collision_layer = 16
-collision_mask = 9
+collision_layer = 8
+collision_mask = 6
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
-position = Vector2(-1, 12)
-shape = SubResource("CircleShape2D_2basq")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox_enemy"]
+position = Vector2(-0.5, 12.5)
+shape = SubResource("RectangleShape2D_u627e")
 debug_color = Color(1, 0.0117647, 0.0196078, 0.419608)
+
+[node name="HuntLostTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="RayCastLook" type="RayCast2D" parent="."]
+position = Vector2(0, 7)
+target_position = Vector2(55, 0)
+collision_mask = 2

@@ -7,23 +7,31 @@ var GRAVITY = 20
 var JUMP = 400
 var JUMP_IN_AIR_LIMIT = 2
 
-enum PlayerStates {MOVE, SWORD}
+var health = Globals.playerLives
+
+enum PlayerStates {MOVE, SWORD, DEATH}
 var CurrentState = PlayerStates.MOVE
 var jump_in_air_counter = 0
 var swordAnimInProgress = false
+var deathAnimInProgress = false
 
 func _ready():
 	$Sword/CollisionShape2D.disabled = true
 	$anim.connect("animation_finished", _onAnimationFinised)
+	$hitbox.connect("area_entered", _onHitboxAreaEntred)
 
 func _physics_process(delta):
-	_handleInputs(delta)
-	_handleGravity()
-
 	match CurrentState:
 		PlayerStates.MOVE:
+			_handleInputs(delta)
+			_handleGravity()
 			_updateBasicAnims()
 		PlayerStates.SWORD:
+			_handleInputs(delta)
+			_handleGravity()
+			_updateAttackAnims()
+		PlayerStates.DEATH:
+			_handleGravity()
 			_updateAttackAnims()
 	
 	move_and_slide()
@@ -50,6 +58,7 @@ func _handleInputs(delta):
 	
 	if Input.is_action_just_pressed("ui_sword"):
 		_sword(movement)
+
 
 
 func _moveRight(delta):
@@ -119,4 +128,24 @@ func _onAnimationFinised(name: String):
 func _resetPlayerState():
 	CurrentState = PlayerStates.MOVE
 
+func _onHitboxAreaEntred(area):
+	var isEnemy = area.is_in_group("ENEMY")
+	if isEnemy:
+		_takeDamage()
+
+func _takeDamage():
+	health -= 1
+	Globals.playerLives = health
+	if health <= 0:
+		_death()
+	print(Globals.playerLives)
+
+func _death():
+	if deathAnimInProgress: return
+	
+	CurrentState = PlayerStates.DEATH
+	$anim.play("Dead")
+	await $anim.animation_finished
+	Globals.playerLives = Globals.playerLivesCap
+	get_tree().reload_current_scene()
 

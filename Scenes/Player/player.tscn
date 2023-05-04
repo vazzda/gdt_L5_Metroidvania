@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cl7ylxew07csb"]
+[gd_scene load_steps=14 format=3 uid="uid://cl7ylxew07csb"]
 
 [ext_resource type="Texture2D" uid="uid://cavphlkmbl11c" path="res://Player2.png" id="1_8xay6"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_uww6a"]
@@ -156,7 +156,12 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g1mcn"]
 size = Vector2(19, 38)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rb6uf"]
+size = Vector2(18, 27)
+
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_uww6a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -182,3 +187,12 @@ position = Vector2(25, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
 shape = SubResource("RectangleShape2D_g1mcn")
 debug_color = Color(1, 0, 0, 0.419608)
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox"]
+position = Vector2(1, 2.5)
+shape = SubResource("RectangleShape2D_rb6uf")
+debug_color = Color(0.964706, 0, 0.494118, 0.419608)
