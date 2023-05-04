@@ -115,6 +115,9 @@ func _onHitboxAreaEntered(area):
 		_tookDamage()
 
 func _tookDamage():
+	if CurrentState != States.HUNTING:
+		CurrentState = States.LOST_PLAYER
+		
 	health -= 1
 	if health <= 0 && CurrentState != States.DEAD:
 		_death()
