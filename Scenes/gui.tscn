@@ -5,6 +5,21 @@
 [ext_resource type="Texture2D" uid="uid://c10vfk3kpq2wa" path="res://Sprites/Interactables/coin.png" id="3_omb6o"]
 [ext_resource type="Texture2D" uid="uid://b74rx3iky2s7a" path="res://Sprites/UI/HeartSpriteSheetl.png" id="4_hnpkx"]
 
+[sub_resource type="Animation" id="Animation_iy4tl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../CoinLogo:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
 [sub_resource type="Animation" id="Animation_xdh6r"]
 resource_name = "coin"
 loop_mode = 1
@@ -21,21 +36,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 0, 0, 0]
 }
 
-[sub_resource type="Animation" id="Animation_iy4tl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../CoinLogo:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ay0fd"]
 _data = {
 "RESET": SubResource("Animation_iy4tl"),
@@ -46,12 +46,14 @@ _data = {
 script = ExtResource("1_8e5rx")
 
 [node name="PlayerLife" type="Sprite2D" parent="."]
-position = Vector2(28.5, 15.5)
+position = Vector2(-48.3137, 50.5098)
+scale = Vector2(2.96774, 2.96774)
 texture = ExtResource("2_2caxk")
+offset = Vector2(42.1274, -1.51961)
 
 [node name="CoinLogo" type="Sprite2D" parent="."]
-position = Vector2(47.5, 24.5)
-scale = Vector2(0.1, 0.1)
+position = Vector2(139, 73)
+scale = Vector2(0.3625, 0.3625)
 texture = ExtResource("3_omb6o")
 hframes = 8
 frame = 1
@@ -64,13 +66,13 @@ libraries = {
 }
 
 [node name="Heart" type="Sprite2D" parent="."]
-position = Vector2(47.5, 13.5)
-scale = Vector2(0.7, 0.7)
+position = Vector2(138.6, 36.6)
+scale = Vector2(1.925, 1.925)
 texture = ExtResource("4_hnpkx")
 hframes = 5
 
 [node name="coinText" type="Label" parent="."]
-offset_left = 56.0
-offset_top = 14.0
-offset_right = 87.0
-offset_bottom = 37.0
+offset_left = 94.0
+offset_top = 30.0
+offset_right = 125.0
+offset_bottom = 53.0
