@@ -6,10 +6,10 @@ var RUN_SPEED = 30
 var GRAVITY = 80
 enum States {RELAX, HUNTING, LOST_PLAYER, DEAD}
 var CurrentState = States.RELAX
-var deathAnimInProgress = false
+var health = 1
 
+var deathAnimInProgress = false
 var moving_left = false
-var health = 3
 var lookingToggleCounter = 0
 var lookingToggleCounterCap = 3
 var lookingToggleCounterTime = 1
@@ -113,6 +113,7 @@ func _updateAnims():
 
 func _death():
 	CurrentState = States.DEAD
+	$hitbox_enemy.queue_free()
 	anim.play("Dead")
 	await anim.animation_finished
 	queue_free()
