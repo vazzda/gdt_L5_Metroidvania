@@ -60,6 +60,14 @@ func _lostPlayer():
 			_resetLookingStates()
 			CurrentState = States.RELAX
 
+func _instantLooKNHunt():
+	$RayCastLook.force_raycast_update()
+	if !$RayCastLook.is_colliding():
+		_changeEnemyAndRayCastDirection()
+	if $RayCastLook.is_colliding():
+		_player_detect()
+	
+
 
 func _move():
 	if !moving_left:
@@ -116,7 +124,7 @@ func _onHitboxAreaEntered(area):
 
 func _tookDamage():
 	if CurrentState != States.HUNTING:
-		CurrentState = States.LOST_PLAYER
+		_instantLooKNHunt()
 		
 	health -= 1
 	_flash()
