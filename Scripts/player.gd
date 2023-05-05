@@ -6,8 +6,8 @@ var VELOCITY_CLAMNP = 100.0
 var GRAVITY = 20
 var JUMP = 400
 var JUMP_IN_AIR_LIMIT = 2
-var KICK_FREEZE = 0.5
-var KICK_FORCE = Vector2(200,-200)
+var KICK_FREEZE = 0.3
+var KICK_FORCE = Vector2(125,-225)
 
 var health = Globals.playerLives
 
@@ -128,8 +128,6 @@ func _sword(movement):
 
 func _handleGravity():
 	velocity.y += GRAVITY
-	if CurrentState == PlayerStates.KICKED && is_on_floor():
-		CurrentState = PlayerStates.MOVE
 
 
 func _updateBasicAnims():
@@ -167,12 +165,12 @@ func _resetPlayerState():
 
 func _onHitboxAreaEntred(area):
 	var isEnemy = area.is_in_group("ENEMY")
-
-	
 	if isEnemy:
 		_takeDamage(area)
 
 func _takeDamage(area):
+	if CurrentState == PlayerStates.KICKED: return
+	
 	_getKick(area)
 	health -= 1
 	Globals.playerLives = health
