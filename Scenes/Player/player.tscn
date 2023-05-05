@@ -1,7 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://cl7ylxew07csb"]
+[gd_scene load_steps=16 format=3 uid="uid://cl7ylxew07csb"]
 
 [ext_resource type="Texture2D" uid="uid://cavphlkmbl11c" path="res://Player2.png" id="1_8xay6"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_uww6a"]
+[ext_resource type="Shader" path="res://Shaders/hurt.gdshader" id="3_4h4hf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u1dj5"]
+shader = ExtResource("3_4h4hf")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pd50c"]
 size = Vector2(18, 27)
@@ -165,6 +171,7 @@ collision_mask = 17
 script = ExtResource("1_uww6a")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_u1dj5")
 texture = ExtResource("1_8xay6")
 hframes = 5
 vframes = 5

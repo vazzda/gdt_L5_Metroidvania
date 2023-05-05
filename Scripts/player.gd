@@ -172,6 +172,7 @@ func _takeDamage(area):
 	if CurrentState == PlayerStates.KICKED: return
 	
 	_getKick(area)
+	_flash()
 	health -= 1
 	Globals.playerLives = health
 	if health <= 0:
@@ -185,4 +186,14 @@ func _death():
 	await $anim.animation_finished
 	Globals.playerLives = Globals.playerLivesCap
 	get_tree().reload_current_scene()
+
+func _flash():
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 1)
+	await (get_tree().create_timer(0.05)).timeout
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 0)
+	await (get_tree().create_timer(0.05)).timeout
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 1)
+	await (get_tree().create_timer(0.05)).timeout
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 0)
+	
 
