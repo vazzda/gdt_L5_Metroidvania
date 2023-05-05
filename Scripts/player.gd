@@ -8,6 +8,8 @@ var JUMP = 400
 var JUMP_IN_AIR_LIMIT = 2
 var KICK_FREEZE = 0.3
 var KICK_FORCE = Vector2(125,-225)
+var INVULNERABILITY = 2
+var INVULNERABILITY_BLINK = 0.05
 
 var health = Globals.playerLives
 
@@ -17,13 +19,19 @@ var jump_in_air_counter = 0
 var swordAnimInProgress = false
 var deathAnimInProgress = false
 var freezeTimer = Timer.new()
+var invulTimer = Timer.new()
+var isInvulnerable = false
+var isInvulnerableBlinkState = false
 
 func _ready():
 	$Sword/CollisionShape2D.disabled = true
 	$anim.connect("animation_finished", _onAnimationFinised)
 	$hitbox.connect("area_entered", _onHitboxAreaEntred)
+	
 	add_child(freezeTimer)
 	freezeTimer.connect("timeout", _onFreezeTimeOut)
+	add_child(invulTimer)
+	invulTimer.connect("timeout", _onInvulTimeOut)
 
 
 func _physics_process(delta):
@@ -90,6 +98,8 @@ func _kick(direction):
 	velocity.y = KICK_FORCE.y
 	velocity.x = KICK_FORCE.x * direction
 
+func _stop():
+	velocity.x = 0
 
 func _getKick(area):
 	if CurrentState != PlayerStates.DEATH:
@@ -169,16 +179,19 @@ func _onHitboxAreaEntred(area):
 		_takeDamage(area)
 
 func _takeDamage(area):
+	if isInvulnerable: return
 	if CurrentState == PlayerStates.KICKED: return
-	
-	_getKick(area)
-	_flash()
+
 	health -= 1
 	Globals.playerLives = health
 	if health <= 0:
 		_death()
+	else:
+		_getKick(area)
+		_setInvul()
 
 func _death():
+	_stop()
 	if deathAnimInProgress: return
 	
 	CurrentState = PlayerStates.DEATH
@@ -186,14 +199,22 @@ func _death():
 	await $anim.animation_finished
 	Globals.playerLives = Globals.playerLivesCap
 	get_tree().reload_current_scene()
-
-func _flash():
-	$Sprite2D.material.set_shader_parameter("flash_modifier", 1)
-	await (get_tree().create_timer(0.05)).timeout
-	$Sprite2D.material.set_shader_parameter("flash_modifier", 0)
-	await (get_tree().create_timer(0.05)).timeout
-	$Sprite2D.material.set_shader_parameter("flash_modifier", 1)
-	await (get_tree().create_timer(0.05)).timeout
-	$Sprite2D.material.set_shader_parameter("flash_modifier", 0)
 	
+func _setInvul():
+	isInvulnerable = true
+	invulTimer.start(INVULNERABILITY_BLINK)
+	await (get_tree().create_timer(INVULNERABILITY)).timeout
+	_disableInvul()
 
+func _disableInvul():
+	isInvulnerable = false
+	invulTimer.stop()
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 0)
+
+func _onInvulTimeOut():
+	_toggleInvulBlink()
+
+func _toggleInvulBlink():
+	var state = int(isInvulnerableBlinkState)
+	isInvulnerableBlinkState = !isInvulnerableBlinkState
+	$Sprite2D.material.set_shader_parameter("flash_modifier", state)

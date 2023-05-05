@@ -1,6 +1,6 @@
 extends Node
 
-var playerLivesCap = 10
+var playerLivesCap = 3
 var playerLives = playerLivesCap
 
 # Called when the node enters the scene tree for the first time.
