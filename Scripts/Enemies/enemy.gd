@@ -119,5 +119,11 @@ func _tookDamage():
 		CurrentState = States.LOST_PLAYER
 		
 	health -= 1
+	_flash()
 	if health <= 0 && CurrentState != States.DEAD:
 		_death()
+
+func _flash():
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 1)
+	await (get_tree().create_timer(0.15)).timeout
+	$Sprite2D.material.set_shader_parameter("flash_modifier", 0)

@@ -1,10 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://bna8qq31xy0fc"]
+[gd_scene load_steps=11 format=3 uid="uid://bna8qq31xy0fc"]
 
 [ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="1_2qran"]
 [ext_resource type="Texture2D" uid="uid://cwl2mtmsv7smb" path="res://Sprites/Enemies/Enemy2.png" id="1_2xb2l"]
+[ext_resource type="Shader" path="res://Shaders/hurt.gdshader" id="2_ln0vw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o2uoe"]
 size = Vector2(13, 5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cw63a"]
+shader = ExtResource("2_ln0vw")
+shader_parameter/flash_color = Color(0.960784, 0, 0.0627451, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="Animation" id="Animation_h0qcp"]
 resource_name = "Dead"
@@ -158,6 +164,7 @@ position = Vector2(-0.5, 13.5)
 shape = SubResource("RectangleShape2D_o2uoe")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_cw63a")
 texture = ExtResource("1_2xb2l")
 hframes = 7
 vframes = 2
@@ -192,5 +199,5 @@ one_shot = true
 
 [node name="RayCastLook" type="RayCast2D" parent="."]
 position = Vector2(0, 7)
-target_position = Vector2(55, 0)
+target_position = Vector2(87, 0)
 collision_mask = 2
