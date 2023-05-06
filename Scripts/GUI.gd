@@ -13,12 +13,17 @@ func _ready():
 		new_heart.texture = $Heart.texture
 		new_heart.hframes = $Heart.hframes
 		$Heart.add_child(new_heart)
+	
+	Globals.connect("COIN_CHANGED", updateCoins)
+	resetHUD()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	_checkForLivesSync()
-	
+
+func resetHUD():
+	updateCoins()
 	
 func redrawHeatlh():
 	for heart in $Heart.get_children():
@@ -39,3 +44,8 @@ func _checkForLivesSync():
 		redrawHeatlh()
 	GUI_healh_current = Globals.playerLives
 	GUI_healh_cup = Globals.playerLivesCap
+
+
+func updateCoins():
+	print(123)
+	$coinText.text = str(Globals.getCoins())

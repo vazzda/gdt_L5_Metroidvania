@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://ymmtlc1vcnm1"]
+[gd_scene load_steps=19 format=3 uid="uid://ymmtlc1vcnm1"]
 
 [ext_resource type="PackedScene" uid="uid://cl7ylxew07csb" path="res://Scenes/Player/player.tscn" id="1_hnjsj"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="1_vib84"]
 [ext_resource type="Texture2D" uid="uid://g8c8cvk4fegd" path="res://Sprites/Ground/ground-tileset.png" id="2_n2wfi"]
 [ext_resource type="PackedScene" uid="uid://cvhigwo88p4l4" path="res://Scenes/Interactables/crate.tscn" id="3_t1jk2"]
 [ext_resource type="Texture2D" uid="uid://bmj5lpahvu7rk" path="res://Sprites/World 1/background.png" id="4_76qyx"]
@@ -14,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://c6fcmhrojbbik" path="res://Sprites/World 1/Foreground.png" id="12_sv5td"]
 [ext_resource type="PackedScene" uid="uid://bna8qq31xy0fc" path="res://Scenes/Enemies/enemy.tscn" id="13_xo3h8"]
 [ext_resource type="PackedScene" uid="uid://r4nih55wjapy" path="res://Scenes/gui.tscn" id="14_ioy3m"]
+[ext_resource type="PackedScene" uid="uid://bsxnqqqu4xf1o" path="res://Scenes/coin.tscn" id="15_o855k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rd5yi"]
 texture = ExtResource("2_n2wfi")
@@ -322,6 +324,7 @@ sources/0 = SubResource("TileSetAtlasSource_rd5yi")
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 zoom = Vector2(3, 3)
+script = ExtResource("1_vib84")
 
 [node name="Player" parent="." instance=ExtResource("1_hnjsj")]
 z_index = 300
@@ -391,3 +394,11 @@ centered = false
 position = Vector2(250, 112)
 
 [node name="GUI" parent="." instance=ExtResource("14_ioy3m")]
+
+[node name="Coins" type="Node2D" parent="."]
+
+[node name="Coin" parent="Coins" instance=ExtResource("15_o855k")]
+position = Vector2(287, 105)
+
+[node name="Coin2" parent="Coins" instance=ExtResource("15_o855k")]
+position = Vector2(239, 40)

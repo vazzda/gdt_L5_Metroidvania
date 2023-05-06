@@ -1,13 +1,14 @@
 extends Node
 
+signal COIN_CHANGED
+
 var playerLivesCap = 3
 var playerLives = playerLivesCap
+var _coins = 0
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func addOneCoin():
+	_coins += 1
+	self.emit_signal("COIN_CHANGED")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func getCoins():
+	return _coins
