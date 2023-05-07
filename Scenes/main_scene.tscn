@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://ymmtlc1vcnm1"]
+[gd_scene load_steps=18 format=3 uid="uid://ymmtlc1vcnm1"]
 
 [ext_resource type="PackedScene" uid="uid://cl7ylxew07csb" path="res://Scenes/Player/player.tscn" id="1_hnjsj"]
-[ext_resource type="Script" path="res://Scripts/Camera.gd" id="1_vib84"]
 [ext_resource type="Texture2D" uid="uid://g8c8cvk4fegd" path="res://Sprites/Ground/ground-tileset.png" id="2_n2wfi"]
 [ext_resource type="PackedScene" uid="uid://cvhigwo88p4l4" path="res://Scenes/Interactables/crate.tscn" id="3_t1jk2"]
 [ext_resource type="Texture2D" uid="uid://bmj5lpahvu7rk" path="res://Sprites/World 1/background.png" id="4_76qyx"]
@@ -320,11 +319,6 @@ terrain_set_0/terrain_0/color = Color(0.486275, 0.207843, 0.552941, 1)
 sources/0 = SubResource("TileSetAtlasSource_rd5yi")
 
 [node name="MainScene" type="Node2D"]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-zoom = Vector2(3, 3)
-script = ExtResource("1_vib84")
 
 [node name="Player" parent="." instance=ExtResource("1_hnjsj")]
 z_index = 300

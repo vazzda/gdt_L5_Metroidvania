@@ -45,35 +45,41 @@ _data = {
 [node name="GUI" type="CanvasLayer"]
 script = ExtResource("1_8e5rx")
 
-[node name="PlayerLife" type="Sprite2D" parent="."]
+[node name="Level" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerLife" type="Sprite2D" parent="Level"]
 position = Vector2(-48.3137, 50.5098)
 scale = Vector2(2.96774, 2.96774)
 texture = ExtResource("2_2caxk")
 offset = Vector2(42.1274, -1.51961)
 
-[node name="CoinLogo" type="Sprite2D" parent="."]
+[node name="CoinLogo" type="Sprite2D" parent="Level"]
 position = Vector2(139, 73)
 scale = Vector2(0.3625, 0.3625)
 texture = ExtResource("3_omb6o")
 hframes = 8
 frame = 1
 
-[node name="anim" type="AnimationPlayer" parent="CoinLogo"]
+[node name="anim" type="AnimationPlayer" parent="Level/CoinLogo"]
 root_node = NodePath("../../Heart")
 autoplay = "coin"
 libraries = {
 "": SubResource("AnimationLibrary_ay0fd")
 }
 
-[node name="Heart" type="Sprite2D" parent="."]
+[node name="Heart" type="Sprite2D" parent="Level"]
 position = Vector2(138.6, 36.6)
 scale = Vector2(1.925, 1.925)
 texture = ExtResource("4_hnpkx")
 hframes = 5
 
-[node name="coinText" type="Label" parent="."]
+[node name="coinText" type="Label" parent="Level"]
 offset_left = 160.0
 offset_top = 62.0
-offset_right = 191.0
-offset_bottom = 85.0
+offset_right = 197.0
+offset_bottom = 88.0
 text = "9999"

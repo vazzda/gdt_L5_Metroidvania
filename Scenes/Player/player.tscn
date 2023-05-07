@@ -203,3 +203,9 @@ collision_mask = 8
 position = Vector2(1, 2.5)
 shape = SubResource("RectangleShape2D_rb6uf")
 debug_color = Color(0.964706, 0, 0.494118, 0.419608)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+position_smoothing_speed = 60.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
