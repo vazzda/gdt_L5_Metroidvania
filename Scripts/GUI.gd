@@ -3,8 +3,10 @@ extends CanvasLayer
 const HEART_ROW_SIZE = 8
 const HEART_OFFSET = 16
 
-@onready var HEART = $Heart
-@onready var COINS_LABEL = $coinText
+@onready var LEVEL_GROUP = $Level
+@onready var PAUSE_GROUP = $PauseMenu
+@onready var HEART = $Level/Heart
+@onready var COINS_LABEL = $Level/coinText
 
 var GUI_healh_cup
 var GUI_healh_current
@@ -18,6 +20,13 @@ func _ready():
 func _process(delta):
 	_checkForLivesSync()
 
+func showPause():
+	LEVEL_GROUP.visible = false
+	PAUSE_GROUP.visible = true
+
+func hidePause():
+	LEVEL_GROUP.visible = false
+	PAUSE_GROUP.visible = true
 
 func resetHUD():
 	updateCoins()

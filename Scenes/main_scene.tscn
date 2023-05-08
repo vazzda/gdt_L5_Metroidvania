@@ -334,6 +334,11 @@ layer_0/tile_data = PackedInt32Array(458758, 0, 0, 458759, 65536, 0, 458760, 196
 z_index = 100
 position = Vector2(79, 127)
 
+[node name="Enemy" parent="." instance=ExtResource("13_xo3h8")]
+position = Vector2(250, 112)
+
+[node name="GUI" parent="." instance=ExtResource("14_ioy3m")]
+
 [node name="bg" type="Node2D" parent="."]
 
 [node name="bg_01_sky" type="Sprite2D" parent="bg"]
@@ -383,11 +388,6 @@ centered = false
 z_index = -20
 texture = ExtResource("12_sv5td")
 centered = false
-
-[node name="Enemy" parent="." instance=ExtResource("13_xo3h8")]
-position = Vector2(250, 112)
-
-[node name="GUI" parent="." instance=ExtResource("14_ioy3m")]
 
 [node name="Coins" type="Node2D" parent="."]
 
